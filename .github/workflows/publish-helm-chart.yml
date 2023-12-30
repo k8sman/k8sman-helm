@@ -32,5 +32,9 @@ jobs:
     - name: Commit Charts Directory
       run: |
         git add ./charts/
-        git commit -m "Publish updated Helm chart [skip ci]"
-        git push
+        if git diff --staged --quiet; then
+          echo "Nenhuma alteração no diretório ./charts/, pulando o commit."
+        else
+          git commit -m "Publish updated Helm chart [skip ci]"
+          git push
+        fi
