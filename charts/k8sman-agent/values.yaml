@@ -11,8 +11,4 @@ serviceAccount:
   create: true
   name: "k8sman-agent"
 
-service:
-  type: ClusterIP
-  port: 80
-
 resources: {}
