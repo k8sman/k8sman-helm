@@ -1,66 +1,19 @@
-# k8sman-helm-chart
+# Welcome to k8sman-helm-chart
 
-## Overview
-`k8sman` is a management platform for Kubernetes clusters, designed to facilitate the execution of administrative commands and orchestrate interactions within the cluster. The `k8sman-helm-chart` deploys the `k8sman-agent` in Kubernetes clusters, enabling seamless communication with RabbitMQ for efficient message passing and management tasks.
+## About k8sman
 
-## Prerequisites
-- Kubernetes cluster with internet access.
-- Helm 3 installed.
+`k8sman` is an innovative management platform for Kubernetes clusters, designed to facilitate the execution of administrative commands and orchestrate interactions within the cluster. It offers efficient communication and robust task management by seamlessly integrating with RabbitMQ for message passing.
 
-## Adding the Helm Repository
-To use the `k8sman-helm-chart`, you need to add the repository to Helm:
+The `k8sman-helm-chart` is an essential component of this ecosystem, providing an easy and reliable way to deploy the `k8sman-agent` in Kubernetes clusters. With `k8sman`, you can manage your cluster more effectively, leveraging advanced administrative capabilities and simplified integration with RabbitMQ for message passing.
 
-```shell
-helm repo add k8sman https://ovrdoz.github.io/k8sman-helm-chart
-helm repo update
-```
+## Getting Started with k8sman-helm-chart
 
-## Installing the Chart
-Install the `k8sman-agent` chart with the following command, replacing `xxxx` with your RabbitMQ configuration:
+To start using the `k8sman-helm-chart` and explore all its features, visit our GitHub repository where you'll find detailed information about installation, configuration, and usage of the chart.
 
-```shell
-helm install k8sman-agent k8sman/k8sman-helm-chart \
-    --set rabbitmq.host="xxxx" \
-    --set rabbitmq.vhost="xxxx" \
-    --set rabbitmq.user="xxxx" \
-    --set rabbitmq.pass="xxxx"
-```
+[Explore the k8sman-helm-chart on GitHub](https://github.com/ovrdoz/k8sman-helm-chart)
 
-To find the latest version of the chart, use:
+## Contributions and Feedback
 
-```shell
-helm search repo k8sman
-```
+Your contributions and feedback are very important to us. If you have suggestions, corrections, or would like to contribute to the project, feel free to reach out through our GitHub repository.
 
-## Uninstalling the Chart
-To uninstall the `k8sman-agent` chart:
-
-```shell
-helm delete k8sman-agent
-```
-
-## Configuration
-The chart can be customized using various parameters. These are specified in the `values.yaml` file or can be overridden via the command line.
-
-| Parameter            | Description                           | Default Value                  |
-|----------------------|---------------------------------------|--------------------------------|
-| `replicaCount`       | Number of `k8sman-agent` replicas     | `1`                            |
-| `image.repository`   | `k8sman-agent` image repository       | `ovrdoz/k8sman-agent`          |
-| `image.pullPolicy`   | Image pull policy                     | `Always`                       |
-| `image.tag`          | `k8sman-agent` image tag              | `latest`                       |
-| `rabbitmq.host`      | RabbitMQ server host                  | `<host>`                         |
-| `rabbitmq.vhost`     | RabbitMQ server virtual host          | `<vhost>`                        |
-| `rabbitmq.user`      | RabbitMQ username                     | `<username>`                     |
-| `rabbitmq.pass`      | RabbitMQ password                     | `<encoded-password>`           |
-
-### RBAC Configuration
-`k8sman-agent` requires extensive permissions to manage the Kubernetes cluster. Modify the RBAC settings in `rbac.yaml` according to your security policies and needs.
-
-## Security Considerations
-Ensure the `k8sman-agent` runs with necessary permissions and manage RabbitMQ server access securely.
-
-## Contributing
-Contributions are welcome. Please refer to the contribution guidelines for more information.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Thank you for your interest in `k8sman`!
