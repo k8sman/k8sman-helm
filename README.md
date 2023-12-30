@@ -48,9 +48,9 @@ The chart can be customized using various parameters. These are specified in the
 | `image.repository`   | `k8sman-agent` image repository       | `ovrdoz/k8sman-agent`          |
 | `image.pullPolicy`   | Image pull policy                     | `Always`                       |
 | `image.tag`          | `k8sman-agent` image tag              | `latest`                       |
-| `rabbitmq.host`      | RabbitMQ server host                  | `host`                         |
-| `rabbitmq.vhost`     | RabbitMQ server virtual host          | `vhost`                        |
-| `rabbitmq.user`      | RabbitMQ username                     | `username`                     |
+| `rabbitmq.host`      | RabbitMQ server host                  | `<host>`                         |
+| `rabbitmq.vhost`     | RabbitMQ server virtual host          | `<vhost>`                        |
+| `rabbitmq.user`      | RabbitMQ username                     | `<username>`                     |
 | `rabbitmq.pass`      | RabbitMQ password                     | `<encoded-password>`           |
 
 ### RBAC Configuration
