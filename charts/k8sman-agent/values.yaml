@@ -12,4 +12,3 @@ serviceAccount:
   name: "k8sman-agent"
 
 resources: {}
-
