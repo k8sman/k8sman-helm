@@ -1,0 +1,18 @@
+replicaCount: 1
+
+fullnameOverride: "k8sman-agent"
+
+image:
+  repository: ovrdoz/k8sman-agent
+  pullPolicy: Always
+  tag: "latest"
+
+serviceAccount:
+  create: true
+  name: "k8sman-agent"
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}

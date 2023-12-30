@@ -1,0 +1,21 @@
+# Arquivos e diretórios de configuração do Helm
+charts/*.tgz
+charts/index.yaml
+
+# Arquivos temporários que podem ser gerados durante o empacotamento
+**/tmp
+**/temp
+
+# Arquivos de ambiente e configuração específicos do desenvolvedor
+.env
+.env.local
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de editor/IDE específicos
+.idea/
+.vscode/
+*.swp
+*.swo
