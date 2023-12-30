@@ -1,6 +1,6 @@
 # Arquivos e diretórios de configuração do Helm
 charts/*.tgz
-charts/index.yaml
+#charts/index.yaml
 
 # Arquivos temporários que podem ser gerados durante o empacotamento
 **/tmp
