@@ -12,11 +12,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
+        with:
+          ref: ${{ github.head_ref }}
 
     - name: Set up Helm
       uses: azure/setup-helm@v1
@@ -29,12 +26,16 @@ jobs:
       run: |
         helm repo index ./charts --url https://ovrdoz.github.io/k8sman-helm-chart/charts/
     
+    - name: Check for modified files
+      id: git-check
+      run: echo ::set-output name=modified::$(if [ -n "$(git status --porcelain)" ]; then echo "true"; else echo "false"; fi)
+
     - name: Commit Charts Directory
+      if: steps.git-check.outputs.modified == 'true'
       run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
         git add ./charts/
-        if git diff --staged --quiet; then
-          echo "Nenhuma alteração no diretório ./charts/, pulando o commit."
-        else
-          git commit -m "Publish updated Helm chart [skip ci]"
-          git push
-        fi
+        git commit -m "Publish updated Helm chart [skip ci]"
+        git push 
+
