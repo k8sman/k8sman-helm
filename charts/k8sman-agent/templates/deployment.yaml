@@ -31,3 +31,4 @@ spec:
                 secretKeyRef:
                   name: {{ include "k8sman-agent.name" . }}-secret
                   key: rabbitmq-pass
+
