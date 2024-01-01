@@ -10,7 +10,7 @@ The `k8sman-helm-chart` is an essential component of this ecosystem, providing a
 
 To start using the `k8sman-helm-chart` and explore all its features, visit our GitHub repository where you'll find detailed information about installation, configuration, and usage of the chart.
 
-[Explore the k8sman-helm-chart on GitHub](https://github.com/ovrdoz/k8sman-helm-chart)
+[Explore the k8sman-helm-chart on GitHub](https://github.com/k8sman/k8sman-helm-chart)
 
 ## Contributions and Feedback
 
