@@ -29,22 +29,25 @@ jobs:
       - name: Check for chart version changes
         id: check_version
         run: |
-          # Get the current chart version from Chart.yaml
-          current_version=$(grep 'version:' Chart.yaml | cut -d ' ' -f 2)
+          # Define o caminho para o Chart.yaml
+          CHART_PATH="charts/k8sman-agent/Chart.yaml"
+
+          # Obtém a versão atual do chart do Chart.yaml
+          current_version=$(grep 'version:' $CHART_PATH | cut -d ' ' -f 2)
           echo "Current Chart Version: $current_version"
           echo "Current Version: $current_version" >> $GITHUB_ENV
 
-          # Get the latest chart version from the last commit (ignoring the current commit)
-          previous_version=$(git show HEAD^:Chart.yaml | grep 'version:' | cut -d ' ' -f 2)
+          # Obtém a versão do chart do último commit (ignorando o commit atual)
+          previous_version=$(git show HEAD^:$CHART_PATH | grep 'version:' | cut -d ' ' -f 2)
           echo "Previous Chart Version: $previous_version"
 
-          # Set output to indicate if the version has changed
+          # Define a saída para indicar se a versão foi alterada
           if [ "$current_version" != "$previous_version" ]; then
             echo "Version changed. Proceeding with release."
-            echo "::set-output name=version_changed::true"
+            echo "version_changed=true" >> $GITHUB_ENV
           else
             echo "No version change detected. Skipping release."
-            echo "::set-output name=version_changed::false"
+            echo "version_changed=false" >> $GITHUB_ENV
           fi
 
       - name: Run chart-releaser
