@@ -32,7 +32,7 @@ helm repo update
 Install the `k8sman-agent` chart with the following command, replacing `xxxx` with your RabbitMQ configuration:
 
 ```shell
-helm install k8sman-agent k8sman/k8sman-helm-chart \
+helm install k8sman-agent k8sman/k8sman-agent \
     --set rabbitmq.host="xxxx" \
     --set rabbitmq.vhost="xxxx" \
     --set rabbitmq.user="xxxx" \
