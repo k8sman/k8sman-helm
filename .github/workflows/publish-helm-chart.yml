@@ -11,22 +11,44 @@ jobs:
   release-chart:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: set up helm 
+      - name: Set up Helm 
         uses: azure/setup-helm@v3
         with:
           version: v3.11.2
 
-      - name: configure git (package metadata) 
+      - name: Configure Git (package metadata) 
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-  
-      - name: run chart-releaser
+
+      - name: Check for chart version changes
+        id: check_version
+        run: |
+          # Get the current chart version from Chart.yaml
+          current_version=$(grep 'version:' Chart.yaml | cut -d ' ' -f 2)
+          echo "Current Chart Version: $current_version"
+          echo "Current Version: $current_version" >> $GITHUB_ENV
+
+          # Get the latest chart version from the last commit (ignoring the current commit)
+          previous_version=$(git show HEAD^:Chart.yaml | grep 'version:' | cut -d ' ' -f 2)
+          echo "Previous Chart Version: $previous_version"
+
+          # Set output to indicate if the version has changed
+          if [ "$current_version" != "$previous_version" ]; then
+            echo "Version changed. Proceeding with release."
+            echo "::set-output name=version_changed::true"
+          else
+            echo "No version change detected. Skipping release."
+            echo "::set-output name=version_changed::false"
+          fi
+
+      - name: Run chart-releaser
+        if: steps.check_version.outputs.version_changed == 'true'
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

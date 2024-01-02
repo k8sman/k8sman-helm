@@ -31,4 +31,31 @@ spec:
                 secretKeyRef:
                   name: {{ include "k8sman-agent.name" . }}-secret
                   key: rabbitmq-pass
-
+            - name: RABBITMQ_USE_TLS
+              value: "{{ .Values.rabbitmq.useTLS | toString }}"
+            - name: RABBITMQ_PORT
+              value: "{{ .Values.rabbitmq.port | toString }}"
+          {{- if .Values.rabbitmq.useTLS }}
+          volumeMounts:
+            - name: rabbitmq-cert
+              mountPath: "/etc/rabbitmq_cert" # no change this
+              readOnly: true
+            - name: rabbitmq-key
+              mountPath: "/etc/rabbitmq_key" # no change this
+              readOnly: true
+          {{- end }}
+      {{- if .Values.rabbitmq.useTLS }}
+      volumes:
+        - name: rabbitmq-cert
+          secret:
+            secretName: {{ include "k8sman-agent.name" . }}-secret
+            items:
+              - key: rabbitmq-cert
+                path: certificate.crt # no change this
+        - name: rabbitmq-key
+          secret:
+            secretName: {{ include "k8sman-agent.name" . }}-secret
+            items:
+              - key: rabbitmq-key
+                path: certificate.key # no change this
+      {{- end }}
