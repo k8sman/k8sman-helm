@@ -48,13 +48,13 @@ spec:
       volumes:
         - name: rabbitmq-cert
           secret:
-            secretName: {{ include "k8sman-agent.name" . }}-secret
+            secretName: {{ include "k8sman-agent.name" . }}-tls
             items:
               - key: rabbitmq-cert
                 path: certificate.crt # no change this
         - name: rabbitmq-key
           secret:
-            secretName: {{ include "k8sman-agent.name" . }}-secret
+            secretName: {{ include "k8sman-agent.name" . }}-tls
             items:
               - key: rabbitmq-key
                 path: certificate.key # no change this
