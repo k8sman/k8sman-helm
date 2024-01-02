@@ -59,4 +59,3 @@ spec:
               - key: rabbitmq-key
                 path: certificate.key # no change this
       {{- end }}
- 
