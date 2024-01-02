@@ -18,5 +18,7 @@ rabbitmq:
   pass: "password"
   useTLS: false  # Change if use TLS
   port: 5672     # Change if use TLS
+  certPath: "certs/rabbitmq-sample.crt"  # Path inside dir chart
+  keyPath: "certs/rabbitmq-sample.key"   # Path inside dir chart
 
 resources: {}
