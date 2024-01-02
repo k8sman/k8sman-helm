@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "chart.fullname" . }}-job-tls
+  name: {{ include "k8sman-agent.name" . }}-job-tls
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-weight": "-5"
@@ -16,7 +16,7 @@ spec:
         args: 
         - |
           openssl req -x509 -newkey rsa:4096 -keyout /tmp/tls.key -out /tmp/tls.crt -days 365 -nodes -subj "/CN={{ .Values.rabbitmq.host }}"
-          kubectl create secret generic {{ include "chart.fullname" . }}-tls --from-file=/tmp/tls.crt --from-file=/tmp/tls.key -n {{ .Release.Namespace }}
+          kubectl create secret generic {{ include "k8sman-agent.name" . }}-tls --from-file=/tmp/tls.crt --from-file=/tmp/tls.key -n {{ .Release.Namespace }}
         volumeMounts:
         - name: tmp
           mountPath: /tmp
