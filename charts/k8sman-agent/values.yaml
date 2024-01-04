@@ -3,7 +3,7 @@ replicaCount: 1
 fullnameOverride: "k8sman-agent"
 
 image:
-  repository: ovrdoz/k8sman-agent
+  repository: k8sman/k8sman-agent
   pullPolicy: Always
   tag: "latest"
 
