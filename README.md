@@ -11,7 +11,7 @@
 To use the `k8sman-helm-chart`, you need to add the repository to Helm:
 
 ```shell
-helm repo add k8sman https://ovrdoz.github.io/k8sman-helm-chart
+helm repo add k8sman https://k8sman.github.io/k8sman-helm-chart
 helm repo update
 ```
 
@@ -46,7 +46,7 @@ The chart can be customized using various parameters. These are specified in the
 | Parameter            | Description                           | Default Value                  |
 |----------------------|---------------------------------------|--------------------------------|
 | `replicaCount`       | Number of `k8sman-agent` replicas     | `1`                            |
-| `image.repository`   | `k8sman-agent` image repository       | `ovrdoz/k8sman-agent`          |
+| `image.repository`   | `k8sman-agent` image repository       | `k8sman/k8sman-agent`          |
 | `image.pullPolicy`   | Image pull policy                     | `Always`                       |
 | `image.tag`          | `k8sman-agent` image tag              | `latest`                       |
 | `rabbitmq.host`      | RabbitMQ server host                  | `<host>`                       |
