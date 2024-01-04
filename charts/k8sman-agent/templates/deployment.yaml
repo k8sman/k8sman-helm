@@ -35,4 +35,4 @@ spec:
               value: "{{ .Values.rabbitmq.useTLS | toString }}"
             - name: RABBITMQ_PORT
               value: "{{ .Values.rabbitmq.port | toString }}"
- 
+  
