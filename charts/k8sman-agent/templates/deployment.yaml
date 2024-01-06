@@ -20,6 +20,8 @@ spec:
           ports:
             - containerPort: 80
           env:
+            - name: K8SMAN_AGENT_NAME
+              value: {{ include "k8sman-agent.name" . }}
             - name: RABBITMQ_HOST
               value: {{ .Values.rabbitmq.host | quote }}
             - name: RABBITMQ_VHOST
