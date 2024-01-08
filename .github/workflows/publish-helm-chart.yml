@@ -1,14 +1,9 @@
 name: Publish Helm Chart
-#on:
-#  push:
-#    paths:
-#      - 'charts/**'
-#      - 'Chart.yaml'
 on:
   push:
-    branches:
-      - main
-
+    paths:
+      - 'charts/**'
+      - 'Chart.yaml'
 permissions:
   contents: write
 
@@ -30,44 +25,6 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          
-      - name: Clean Existing Branch
-        run: |
-          NEW_BRANCH="version-bump-${{ github.run_id }}"
-          EXISTING_BRANCH=$(git ls-remote --heads origin $NEW_BRANCH | wc -l)
-          if [ $EXISTING_BRANCH -eq 1 ]; then
-            git push origin --delete $NEW_BRANCH
-          fi
-
-      - name: Create New Branch for PR
-        run: |
-          NEW_BRANCH="version-bump-${{ github.run_id }}"
-          git checkout -b $NEW_BRANCH
-
-      - name: Increment Chart Version
-        run: |
-          CHART_FILE="charts/k8sman-agent/Chart.yaml"
-          VERSION=$(yq e '.version' $CHART_FILE)
-          NEW_VERSION=$(echo $VERSION | awk -F. '{$2+=1; print $1"."$2".0"}')
-          yq e ".version = \"$NEW_VERSION\"" -i $CHART_FILE
-          git add $CHART_FILE
-          git commit -m "Increment chart version to $NEW_VERSION"
-
-      - name: Push Changes to New Branch
-        run: |
-          NEW_BRANCH="version-bump-${{ github.run_id }}"
-          git checkout -b $NEW_BRANCH
-          git push -u origin $NEW_BRANCH
-
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "main"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "Increment chart version to $NEW_VERSION"
-          pr_body: "Automated version bump for k8sman-agent chart"
-          source_branch: "version-bump-${{ github.run_id }}"
-
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
