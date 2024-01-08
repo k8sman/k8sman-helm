@@ -1,9 +1,14 @@
 name: Publish Helm Chart
+#on:
+#  push:
+#    paths:
+#      - 'charts/**'
+#      - 'Chart.yaml'
 on:
   push:
-    paths:
-      - 'charts/**'
-      - 'Chart.yaml'
+    branches:
+      - main
+      
 permissions:
   contents: write
 
@@ -26,21 +31,12 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Check for changes in k8sman-agent
-        id: check-changes
-        run: |
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q 'charts/k8sman-agent'; then
-            echo "::set-output name=changed::true"
-          fi
-
       - name: Create New Branch for PR
-        if: steps.check-changes.outputs.changed == 'true'
         run: |
           NEW_BRANCH="version-bump-${{ github.run_id }}"
           git checkout -b $NEW_BRANCH
 
       - name: Increment Chart Version
-        if: steps.check-changes.outputs.changed == 'true'
         run: |
           CHART_FILE="charts/k8sman-agent/Chart.yaml"
           VERSION=$(yq e '.version' $CHART_FILE)
@@ -50,12 +46,10 @@ jobs:
           git commit -m "Increment chart version to $NEW_VERSION"
 
       - name: Push Changes to New Branch
-        if: steps.check-changes.outputs.changed == 'true'
         run: |
           git push -u origin HEAD
 
       - name: Create Pull Request
-        if: steps.check-changes.outputs.changed == 'true'
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "main"
