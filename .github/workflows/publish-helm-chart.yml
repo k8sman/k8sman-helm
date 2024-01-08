@@ -30,6 +30,14 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          
+      - name: Clean Existing Branch
+        run: |
+          NEW_BRANCH="version-bump-${{ github.run_id }}"
+          EXISTING_BRANCH=$(git ls-remote --heads origin $NEW_BRANCH | wc -l)
+          if [ $EXISTING_BRANCH -eq 1 ]; then
+            git push origin --delete $NEW_BRANCH
+          fi
 
       - name: Create New Branch for PR
         run: |
