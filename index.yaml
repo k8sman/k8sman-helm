@@ -3,6 +3,15 @@ entries:
   k8sman-agent:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-01-08T02:13:46.858495606Z"
+    description: A Helm chart for Kubernetes Management Agent
+    digest: b467f93bed4bc68ef6b5dd1e8fef4a658491d070ffa0170dbf17dea7625b7726
+    name: k8sman-agent
+    urls:
+    - https://github.com/k8sman/k8sman-helm-chart/releases/download/k8sman-agent-0.1.11/k8sman-agent-0.1.11.tgz
+    version: 0.1.11
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-01-07T17:08:52.160605932Z"
     description: A Helm chart for Kubernetes Management Agent
     digest: 187900fd512f8fad94adb5842d0dbd58993ceed0165898a7b4385b0a8437347f
@@ -91,4 +100,4 @@ entries:
     urls:
     - https://github.com/ovrdoz/k8sman-helm-chart/releases/download/k8sman-agent-0.1.0/k8sman-agent-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-07T17:08:52.160652228Z"
+generated: "2024-01-08T02:13:46.858553784Z"
