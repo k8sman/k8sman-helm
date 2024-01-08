@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - main
-      
+
 permissions:
   contents: write
 
@@ -47,7 +47,9 @@ jobs:
 
       - name: Push Changes to New Branch
         run: |
-          git push -u origin HEAD
+          NEW_BRANCH="version-bump-${{ github.run_id }}"
+          git checkout -b $NEW_BRANCH
+          git push -u origin $NEW_BRANCH
 
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
@@ -56,7 +58,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "Increment chart version to $NEW_VERSION"
           pr_body: "Automated version bump for k8sman-agent chart"
-          source_branch: "${{ github.head_ref }}"
+          source_branch: "version-bump-${{ github.run_id }}"
+
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
