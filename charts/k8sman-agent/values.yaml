@@ -19,4 +19,7 @@ rabbitmq:
   useTLS: false  # Change if use TLS
   port: 5672     # Change if use TLS
 
+# this force an secret-key to identify the agent
+clusterIdentifier: "f2teDZCZlOEusFirGw5U"
+
 resources: {}
