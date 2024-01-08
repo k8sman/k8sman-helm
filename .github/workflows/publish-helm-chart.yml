@@ -26,6 +26,25 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Check for changes in k8sman-agent
+        id: check-changes
+        run: |
+          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q 'charts/k8sman-agent'; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Increment Chart Version
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          # Incrementing minor version in Chart.yaml
+          CHART_FILE="charts/k8sman-agent/Chart.yaml"
+          VERSION=$(yq e '.version' $CHART_FILE)
+          NEW_VERSION=$(echo $VERSION | awk -F. '{$2+=1; print $1"."$2".0"}')
+          yq e ".version = \"$NEW_VERSION\"" -i $CHART_FILE
+          git add $CHART_FILE
+          git commit -m "Increment chart version to $NEW_VERSION"
+          git push
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
