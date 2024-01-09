@@ -31,18 +31,26 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Create Unique Version Branch
+        run: |
+          UNIQUE_BRANCH="version-bump-${GITHUB_RUN_NUMBER}"
+          git checkout -b $UNIQUE_BRANCH
+
       - name: Increment Chart Version
         run: |
-          # Read the current version
           VERSION=$(grep 'version:' charts/k8sman-agent/Chart.yaml | awk '{print $2}')
-          # Increment the version
           NEW_VERSION=$(echo $VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          # Update the file with the new version
           sed -i "s/version: $VERSION/version: $NEW_VERSION/" charts/k8sman-agent/Chart.yaml
-          # Commit and push the changes
           git add charts/k8sman-agent/Chart.yaml
           git commit -m "Increment chart version to $NEW_VERSION"
-          git push
+
+      - name: Push to Unique Version Branch and Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.UNIQUE_BRANCH }}
+          destination_branch: "main"
+          pr_title: "Update chart version to $NEW_VERSION"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
