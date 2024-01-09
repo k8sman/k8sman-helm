@@ -1,14 +1,8 @@
 name: Publish Helm Chart
-#on:
-#  push:
-#    paths:
-#      - 'charts/**'
-#      - 'Chart.yaml'
 on:
   push:
     branches:
       - main
-      
 permissions:
   contents: write
 
@@ -45,11 +39,6 @@ jobs:
           git commit -m "Increment chart version to $NEW_VERSION"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Create Tag for Release
-        run: |
-          git tag ${{ env.NEW_VERSION }}
-          git push origin ${{ env.NEW_VERSION }}
-
       - name: Push to Unique Version Branch and Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
@@ -58,7 +47,14 @@ jobs:
           pr_title: "Update chart version to ${{ env.NEW_VERSION }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Tag Release
+        run: |
+          git tag ${{ env.NEW_VERSION }}
+          git push origin ${{ env.NEW_VERSION }}
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
+        with:
+          version: ${{ env.NEW_VERSION }}
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
