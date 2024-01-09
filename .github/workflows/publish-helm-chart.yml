@@ -1,8 +1,9 @@
 name: Publish Helm Chart
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'charts/**'
+      - 'Chart.yaml'
 permissions:
   contents: write
 
@@ -25,36 +26,7 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Create Unique Version Branch
-        run: |
-          UNIQUE_BRANCH="version-bump-${GITHUB_RUN_NUMBER}"
-          git checkout -b $UNIQUE_BRANCH
-
-      - name: Increment Chart Version
-        run: |
-          VERSION=$(grep 'version:' charts/k8sman-agent/Chart.yaml | awk '{print $2}')
-          NEW_VERSION=$(echo $VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-          sed -i "s/version: $VERSION/version: $NEW_VERSION/" charts/k8sman-agent/Chart.yaml
-          git add charts/k8sman-agent/Chart.yaml
-          git commit -m "Increment chart version to $NEW_VERSION"
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-      - name: Push to Unique Version Branch and Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: ${{ env.UNIQUE_BRANCH }}
-          destination_branch: "main"
-          pr_title: "Update chart version to ${{ env.NEW_VERSION }}"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Tag Release
-        run: |
-          git tag ${{ env.NEW_VERSION }}
-          git push origin ${{ env.NEW_VERSION }}
-
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
-        with:
-          version: ${{ env.NEW_VERSION }}
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
