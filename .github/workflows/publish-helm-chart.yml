@@ -43,13 +43,19 @@ jobs:
           sed -i "s/version: $VERSION/version: $NEW_VERSION/" charts/k8sman-agent/Chart.yaml
           git add charts/k8sman-agent/Chart.yaml
           git commit -m "Increment chart version to $NEW_VERSION"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Create Tag for Release
+        run: |
+          git tag ${{ env.NEW_VERSION }}
+          git push origin ${{ env.NEW_VERSION }}
 
       - name: Push to Unique Version Branch and Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
           source_branch: ${{ env.UNIQUE_BRANCH }}
           destination_branch: "main"
-          pr_title: "Update chart version to $NEW_VERSION"
+          pr_title: "Update chart version to ${{ env.NEW_VERSION }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run chart-releaser
