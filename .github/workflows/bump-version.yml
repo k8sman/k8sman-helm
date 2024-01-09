@@ -25,9 +25,17 @@ jobs:
 
       - name: Bump Minor Version in Chart.yaml
         run: |
-          # Seu script para incrementar a versão minor
-          python3 -c "import yaml; with open('charts/k8sman-agent/Chart.yaml', 'r') as file: chart = yaml.safe_load(file); chart['version'] = 'incremented_version'; with open('charts/k8sman-agent/Chart.yaml', 'w') as file: yaml.dump(chart, file)"
+          python3 -c "\
+          import yaml;\
+          with open('charts/k8sman-agent/Chart.yaml', 'r') as file:\
+            chart = yaml.safe_load(file);\
+            version = chart['version'].split('.');\
+            version[1] = str(int(version[1]) + 1);\
+            chart['version'] = '.'.join(version);\
+          with open('charts/k8sman-agent/Chart.yaml', 'w') as file:\
+            yaml.dump(chart, file, default_flow_style=False)"
         shell: bash
+
 
       - name: Commit and Push Version Bump
         run: |
