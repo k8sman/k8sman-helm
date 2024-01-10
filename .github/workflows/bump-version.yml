@@ -15,11 +15,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Configure Git
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-
     - name: Create New Branch
       run: |
         new_branch="bump-version-$(date +%s)"
@@ -31,6 +26,8 @@ jobs:
 
     - name: Bump Minor Version
       run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
         version=$(yq e '.version' ./charts/k8sman-agent/Chart.yaml)
         IFS='.' read -ra VER <<< "$version"
         ((VER[1]++))
