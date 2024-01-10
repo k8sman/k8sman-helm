@@ -44,11 +44,13 @@ jobs:
           git commit -m "Increment minor version"
           git push origin version-bump
 
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install gh
+
       - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "Increment minor version of Helm Chart"
-          pr_body: "This PR increments the minor version of the Helm Chart."
-          destination_branch: "main"
-          source_branch: "version-bump"
+        run: |
+          gh pr create --base main --head version-bump --title 'Merge version-bump into main' --body 'This PR increments the minor version of the Helm Chart. Created by Github action.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
