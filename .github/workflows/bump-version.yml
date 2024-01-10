@@ -42,6 +42,8 @@ jobs:
     - name: Push Changes
       run: |
         git push --set-upstream origin bump-version
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
