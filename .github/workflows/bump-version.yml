@@ -1,7 +1,9 @@
 name: Bump Helm Chart Version
 
 on:
-  workflow_dispatch:
+  push:
+    branch:
+      - main
 
 jobs:
   bump-version:
