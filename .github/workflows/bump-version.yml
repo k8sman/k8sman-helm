@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write  # Para interagir com issues, se necessário
+  repository-projects: write  # Se você estiver interagindo com projetos do repositório
+
 
 jobs:
   bump-version:
