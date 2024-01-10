@@ -1,9 +1,7 @@
 name: Bump Helm Chart Version
 
 on:
-  push:
-    branch:
-      - main
+  workflow_dispatch:
 
 jobs:
   bump-version:
@@ -22,7 +20,8 @@ jobs:
 
     - name: Create New Branch
       run: |
-        git checkout -b bump-version
+        new_branch="bump-version-$(date +%s)"
+        git checkout -b $new_branch
 
     - name: Install yq
       run: |
@@ -38,18 +37,14 @@ jobs:
         yq e ".version = \"$new_version\"" -i ./charts/k8sman-agent/Chart.yaml
         git add ./charts/k8sman-agent/Chart.yaml
         git commit -m "Bump chart version to $new_version"
-
-    - name: Push Changes
-      run: |
-        git push --set-upstream origin bump-version
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        git push --set-upstream origin $new_branch
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        source_branch: ${{ env.new_branch }}
         destination_branch: "main"
-        pr_title: "Bump chart version to ${{ env.new_version }}"
-        pr_body: "Automated version bump to ${{ env.new_version }}"
+        pr_title: "Bump chart version to $new_version"
+        pr_body: "Automated version bump to $new_version"
         pr_label: "version-bump"
