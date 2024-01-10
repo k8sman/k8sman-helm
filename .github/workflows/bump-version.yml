@@ -20,35 +20,24 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-    - name: Create New Branch
+    - name: Create Unique Version Branch
       run: |
-        new_branch="bump-version-$(date +%s)"
-        git checkout -b $new_branch
+        UNIQUE_BRANCH="version-bump-${GITHUB_RUN_NUMBER}"
+        git checkout -b $UNIQUE_BRANCH
 
-    - name: Install yq
+    - name: Increment Chart Version
       run: |
-        sudo snap install yq
+        VERSION=$(grep 'version:' charts/k8sman-agent/Chart.yaml | awk '{print $2}')
+        NEW_VERSION=$(echo $VERSION | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+        sed -i "s/version: $VERSION/version: $NEW_VERSION/" charts/k8sman-agent/Chart.yaml
+        git add charts/k8sman-agent/Chart.yaml
+        git commit -m "Increment chart version to $NEW_VERSION"
 
-    - name: Bump Minor Version
-      run: |
-        version=$(yq e '.version' ./charts/k8sman-agent/Chart.yaml)
-        IFS='.' read -ra VER <<< "$version"
-        ((VER[1]++))
-        VER[2]=0 # Reset patch version
-        new_version="${VER[0]}.${VER[1]}.${VER[2]}"
-        yq e ".version = \"$new_version\"" -i ./charts/k8sman-agent/Chart.yaml
-        git add ./charts/k8sman-agent/Chart.yaml
-        git commit -m "Bump chart version to $new_version"
-        new_branch="bump-version-$(date +%s)"
-        git checkout -b $new_branch
-        git push --set-upstream origin $new_branch
-
-    - name: Create Pull Request
+    - name: Push to Unique Version Branch and Create Pull Request
       uses: repo-sync/pull-request@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        source_branch: ${{ env.new_branch }}
+        source_branch: ${{ env.UNIQUE_BRANCH }}
         destination_branch: "main"
-        pr_title: "Bump chart version to $new_version"
-        pr_body: "Automated version bump to $new_version"
-        pr_label: "version-bump"
+        pr_title: "Update chart version to $NEW_VERSION"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
