@@ -41,7 +41,7 @@ jobs:
       run: |
         git push --set-upstream origin ${{ env.UNIQUE_BRANCH }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
