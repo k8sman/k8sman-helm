@@ -32,6 +32,7 @@ jobs:
         sed -i "s/version: $VERSION/version: $NEW_VERSION/" charts/k8sman-agent/Chart.yaml
         git add charts/k8sman-agent/Chart.yaml
         git commit -m "Increment chart version to $NEW_VERSION"
+        git push --set-upstream origin ${{ env.UNIQUE_BRANCH }}
 
     - name: Push to Unique Version Branch and Create Pull Request
       uses: repo-sync/pull-request@v2
