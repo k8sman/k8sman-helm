@@ -11,6 +11,10 @@ serviceAccount:
   create: true
   name: "k8sman-agent"
 
+k8sman:
+  pullServer: "tcp://localhost:5555"
+  pushServer: "tcp://localhost:5556"
+
 rabbitmq:
   host: "rabbitmq.example.com"
   vhost: "/"

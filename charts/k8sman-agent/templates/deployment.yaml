@@ -37,4 +37,8 @@ spec:
               value: "{{ .Values.rabbitmq.useTLS | toString }}"
             - name: RABBITMQ_PORT
               value: "{{ .Values.rabbitmq.port | toString }}"
+            - name: K8SMAN_PULL_SERVER_URL
+              value: "{{ .Values.k8sman.pullServer | toString }}"
+            - name: K8SMAN_PUSH_SERVER_URL
+              value: "{{ .Values.k8sman.pushServer | toString }}"
   
