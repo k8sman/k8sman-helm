@@ -22,23 +22,8 @@ spec:
           env:
             - name: K8SMAN_AGENT_NAME
               value: {{ include "k8sman-agent.name" . }}
-            - name: RABBITMQ_HOST
-              value: {{ .Values.rabbitmq.host | quote }}
-            - name: RABBITMQ_VHOST
-              value: {{ .Values.rabbitmq.vhost | quote }}
-            - name: RABBITMQ_USER
-              value: {{ .Values.rabbitmq.user | quote }}
-            - name: RABBITMQ_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "k8sman-agent.name" . }}-secret
-                  key: rabbitmq-pass
-            - name: RABBITMQ_USE_TLS
-              value: "{{ .Values.rabbitmq.useTLS | toString }}"
-            - name: RABBITMQ_PORT
-              value: "{{ .Values.rabbitmq.port | toString }}"
-            - name: K8SMAN_PULL_SERVER_URL
-              value: "{{ .Values.k8sman.pullServer | toString }}"
-            - name: K8SMAN_PUSH_SERVER_URL
-              value: "{{ .Values.k8sman.pushServer | toString }}"
+            - name: K8SMAN_SERVER
+              value: "{{ .Values.k8sman.server | toString }}"
+            - name: ENABLE_TLS
+              value: "{{ .Values.k8sman.enable_tls | toString }}"
   

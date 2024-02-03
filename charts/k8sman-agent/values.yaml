@@ -12,16 +12,8 @@ serviceAccount:
   name: "k8sman-agent"
 
 k8sman:
-  pullServer: "tcp://localhost:5555"
-  pushServer: "tcp://localhost:5556"
-
-rabbitmq:
-  host: "rabbitmq.example.com"
-  vhost: "/"
-  user: "user"
-  pass: "password"
-  useTLS: false  # Change if use TLS
-  port: 5672     # Change if use TLS
+  enable_tls: "false"
+  server: "localhost:5556"
 
 # this force an secret-key to identify the agent
 clusterIdentifier: "f2teDZCZlOEusFirGw5U"
