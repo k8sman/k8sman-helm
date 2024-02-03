@@ -8,10 +8,11 @@ kind: ClusterRole
 metadata:
   name: k8sman-agent-clusterrole
 rules:
-- apiGroups: [""]
-  #resources: ["pods", "pods/log", "namespaces", "deployments", "nodes", "secrets"]
+- apiGroups: ["*"]
   resources: ["*"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  verbs: ["*"]
+  #resources: ["pods", "pods/log", "namespaces", "deployments", "nodes", "secrets"]
+  #verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

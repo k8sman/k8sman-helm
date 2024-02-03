@@ -1,5 +1,5 @@
 apiVersion: v2
 name: k8sman-agent
 description: A Helm chart for Kubernetes Management Agent
-version: 0.1.15
+version: 0.1.16
 appVersion: "latest"
