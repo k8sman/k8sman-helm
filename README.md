@@ -19,7 +19,7 @@ helm repo update
 To install the `k8sman-agent` chart in your Kubernetes cluster, run the following command, replacing `YOUR_AGENT_KEY` with the authentication key provided by the k8sman platform:
 
 ```shell
-helm install k8sman-agent k8sman/k8sman-helm \
+helm install k8sman-agent k8sman/k8sman-agent \
   --set agent.key=YOUR_AGENT_KEY
 ```
 
