@@ -1,19 +1,46 @@
-# Welcome to k8sman-helm-chart
+# k8sman-agent Installation Guide
 
-## About k8sman
+This guide explains how to install the `k8sman-agent` in your Kubernetes cluster using Helm. Follow the steps below to configure the Helm repository and install the agent.
 
-`k8sman` is an innovative management platform for Kubernetes clusters, designed to facilitate the execution of administrative commands and orchestrate interactions within the cluster. It offers efficient communication and robust task management by seamlessly integrating with RabbitMQ for message passing.
+### Step 1: Add the Helm Repository
+First, add the `k8sman` Helm repository to your environment. This will allow you to access the official Helm charts.
 
-The `k8sman-helm-chart` is an essential component of this ecosystem, providing an easy and reliable way to deploy the `k8sman-agent` in Kubernetes clusters. With `k8sman`, you can manage your cluster more effectively, leveraging advanced administrative capabilities and simplified integration with RabbitMQ for message passing.
+```sh
+helm repo add k8sman https://k8sman.github.io/k8sman-helm
+helm repo update
+```
 
-## Getting Started with k8sman-helm-chart
+- **`helm repo add`**: Adds the `k8sman` repository to your list of Helm repositories.
+- **`helm repo update`**: Updates the list of available charts from the configured repositories.
 
-To start using the `k8sman-helm-chart` and explore all its features, visit our GitHub repository where you'll find detailed information about installation, configuration, and usage of the chart.
+### Step 2: Install the k8sman-agent
+Now, you can install the `k8sman-agent` in your Kubernetes cluster with the following command:
 
-[Explore the k8sman-helm-chart on GitHub](https://github.com/k8sman/k8sman-helm-chart)
+```sh
+helm install k8sman-agent k8sman/k8sman-helm \
+  --set agent.key=YOUR_AGENT_KEY_HERE
+```
 
-## Contributions and Feedback
+- **`helm install`**: Installs the `k8sman-agent` in the cluster.
+- **`k8sman-agent`**: Helm release name (can be customized as desired).
+- **`k8sman/k8sman-helm`**: Name of the chart in the `k8sman` repository.
+- **`--set agent.key`**: Sets the agent authentication key. The key must be obtained via the [k8sman platform](https://k8sman.io). Replace `YOUR_AGENT_KEY_HERE` with the key provided for your environment.
 
-Your contributions and feedback are very important to us. If you have suggestions, corrections, or would like to contribute to the project, feel free to reach out through our GitHub repository.
+### Additional Tips
+- Ensure you have administrative access to your Kubernetes cluster and that Helm is properly configured.
+- If you do not have Helm installed, refer to the official Helm documentation at [https://helm.sh/docs/intro/install/](https://helm.sh/docs/intro/install/).
+- Keep the agent key secure, as it is used for authentication.
 
-Thank you for your interest in `k8sman`!
+### Full Command
+To summarize, the command to add the repository and install the `k8sman-agent` is:
+
+```sh
+helm repo add k8sman https://k8sman.github.io/k8sman-helm
+helm repo update
+helm install k8sman-agent k8sman/k8sman-helm \
+  --set agent.key=YOUR_AGENT_KEY_HERE
+```
+
+Thus, the `k8sman-agent` will be installed in your cluster and ready to use.
+
+For more information, visit [k8sman.io](https://k8sman.io).
