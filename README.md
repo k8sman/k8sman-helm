@@ -17,7 +17,7 @@ helm repo update
 Now, you can install the `k8sman-agent` in your Kubernetes cluster with the following command:
 
 ```sh
-helm install k8sman-agent k8sman/k8sman-helm \
+helm install k8sman-agent k8sman/k8sman-agent \
   --set agent.key=YOUR_AGENT_KEY_HERE
 ```
 
