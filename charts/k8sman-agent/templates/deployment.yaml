@@ -26,4 +26,3 @@ spec:
               value: "{{ .Values.k8sman.server | toString }}"
             - name: ENABLE_TLS
               value: "{{ .Values.k8sman.enable_tls | toString }}"
-  

@@ -15,7 +15,6 @@ k8sman:
   enable_tls: "false"
   server: "localhost:5556"
 
-# this force an secret-key to identify the agent
-clusterIdentifier: "f2teDZCZlOEusFirGw5U"
+clusterIdentifier: {}
 
 resources: {}
