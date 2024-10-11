@@ -7,10 +7,7 @@ image:
   pullPolicy: Always
   tag: "latest"
 
-serviceAccount:
-  create: true
-  name: "k8sman-agent"
-
-clusterIdentifier: {}
+agent:
+  key: ""
 
 resources: {}

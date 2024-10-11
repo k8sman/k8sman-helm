@@ -18,7 +18,7 @@ metadata:
   name: k8sman-agent-clusterrolebinding
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceAccount.name | quote }}
+  name: "k8sman-agent"
   namespace: default
 roleRef:
   kind: ClusterRole
