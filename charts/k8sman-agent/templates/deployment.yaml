@@ -22,7 +22,3 @@ spec:
           env:
             - name: K8SMAN_AGENT_NAME
               value: {{ include "k8sman-agent.name" . }}
-            - name: K8SMAN_SERVER
-              value: "{{ .Values.k8sman.server | toString }}"
-            - name: ENABLE_TLS
-              value: "{{ .Values.k8sman.enable_tls | toString }}"

@@ -11,10 +11,6 @@ serviceAccount:
   create: true
   name: "k8sman-agent"
 
-k8sman:
-  enable_tls: "false"
-  server: "localhost:5556"
-
 clusterIdentifier: {}
 
 resources: {}
