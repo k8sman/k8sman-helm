@@ -8,6 +8,6 @@ image:
   tag: "latest"
 
 agent:
-  key: ""
+  token: ""
 
 resources: {}
