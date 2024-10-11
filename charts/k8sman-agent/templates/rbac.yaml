@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: "k8sman-agent"
+  name: {{ include "k8sman-agent.name" . }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -18,7 +18,7 @@ metadata:
   name: k8sman-agent-clusterrolebinding
 subjects:
 - kind: ServiceAccount
-  name: "k8sman-agent"
+  name: {{ include "k8sman-agent.name" . }}
   namespace: default
 roleRef:
   kind: ClusterRole
