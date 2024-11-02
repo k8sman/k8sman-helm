@@ -22,3 +22,6 @@ spec:
           env:
             - name: K8SMAN_AGENT_NAME
               value: {{ include "k8sman-agent.name" . }}
+          envFrom:
+            - secretRef:
+                name: {{ include "k8sman-agent.name" . }}-secret
